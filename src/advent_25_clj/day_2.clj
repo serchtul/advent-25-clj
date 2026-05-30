@@ -1,28 +1,24 @@
 (ns advent-25-clj.day-2
   (:require [clojure.string :as s]))
 
-(defn parse-range [s]
+(defn- parse-range [s]
   (let [bounds (map parse-long (s/split (s/trim s) #"-"))]
     (range (first bounds) (+ 1 (second bounds)))))
 
 (defn part1-invalid-id? [id]
   (let [id-str (str id)
-        cutpoint (-> id-str count (/ 2) int)
-        invalid? (= (subs id-str 0 cutpoint) (subs id-str cutpoint))]
-    #_(when invalid? (println "invalid" id-str))
-    invalid?))
+        middle (-> id-str count (/ 2) int)
+        sub-id (partial subs id-str)]
+    (= (sub-id 0 middle) (sub-id middle))))
 
 (defn part2-invalid-id? [id]
-  (let [id-str (str id)
-        invalid?
-        (->> id-str
-             count
-             (range 1)
-             (map #(subs id-str 0 %))
-             (some #(->> % re-pattern (s/split id-str) count zero?))
-             some?)]
-    #_(when invalid? (println "invalid" id-str))
-    invalid?))
+  (let [id-str (str id)]
+    (->> id-str
+         count
+         (range 1)
+         (map #(subs id-str 0 %))
+         (some #(->> % re-pattern (s/split id-str) empty?))
+         some?)))
 
 (defn solve [invalid-id?]
   (let [input (slurp "input_day2.txt")]
