@@ -1,5 +1,5 @@
 (defproject advent-25-clj "0.1.0-SNAPSHOT"
-  :description "Using Advent of Code's 2025 Edition as a meand to learning Clojure"
+  :description "Using Advent of Code's 2025 Edition as a means to learning Clojure"
   :url "https://github.com/serchtul/advent-25-clj"
   :license {:name "MIT"
             :url "https://opensource.org/license/mit"}
