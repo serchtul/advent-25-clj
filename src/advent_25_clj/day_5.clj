@@ -32,21 +32,21 @@
          (filter #(fresh-item? fresh %))
          count)))
 
-(defn remove-overlaps [fresh]
-  (fn [idx item]
-    (let [prev-upper   (:upper (nth fresh (- idx 1) nil))
-          overlapping? (some-> prev-upper (>= (:lower item)))]
-      (if overlapping?
-        (let [lower (+ prev-upper 1)
-              upper (:upper item)]
-          (when (<= lower upper) {:lower lower :upper upper}))
-        item))))
+(defn remove-overlaps [curr prev]
+  (let [prev-upper   (:upper prev)
+        overlapping? (some-> prev-upper (>= (:lower curr)))]
+    (if overlapping?
+      (let [lower (+ prev-upper 1)
+            upper (:upper curr)]
+        (when (<= lower upper) {:lower lower :upper upper}))
+      curr)))
 
 (defn solve-part2 []
   (let [{:keys [fresh]} (parse-input)]
     (->> fresh
-         (#(map-indexed (remove-overlaps %) %))
+         (#(map remove-overlaps (rest %) %))
          (filter some?)
+         (cons (first fresh))
          (map #(- (:upper %) (:lower %) -1))
          (reduce +))))
 
