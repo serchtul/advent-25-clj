@@ -4,7 +4,7 @@
   :license {:name "MIT"
             :url "https://opensource.org/license/mit"}
   :dependencies [[org.clojure/clojure "1.12.2"]
-                 [clj-http "2.0.0"]]
+                 [org.clojure/math.combinatorics "0.3.2"]]
   :main ^:skip-aot advent-25-clj.core
   :target-path "target/%s"
   :profiles {:uberjar {:aot :all
